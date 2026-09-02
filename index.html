@@ -7,66 +7,586 @@
     <title>Nosso Cantinho ❤️</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #ffe9ef 0%,
+                    #fff5f7 45%,
+                    #fceff3 100%
+                );
+
+            color: #76515d;
+        }
+
+        /* =========================
+           TELA DE ABERTURA
+        ========================= */
+
+        .opening {
             min-height: 100vh;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            background: #fff5f7;
+            padding: 25px;
 
-            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+
+            animation: aparecer 1.2s ease;
         }
 
-        .container {
+        .opening-content {
+            width: 100%;
+            max-width: 430px;
+
             text-align: center;
-            padding: 20px;
+
+            position: relative;
+            z-index: 2;
         }
 
-        img {
+        /* Foto */
+
+        .photo-container {
+            position: relative;
+
             width: 100%;
             max-width: 350px;
 
-            border-radius: 25px;
-
-            box-shadow:
-                0 15px 40px rgba(0,0,0,.15);
+            margin: 0 auto 30px;
         }
 
+        .photo-container img {
+            width: 100%;
+            display: block;
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 25px 60px rgba(122, 64, 82, 0.20);
+
+            animation: fotoEntrar 1.5s ease;
+        }
+
+        /* Título */
+
         h1 {
-            margin-top: 25px;
+            margin: 0;
+
+            font-family: Georgia, serif;
+
+            font-size: clamp(36px, 9vw, 48px);
+
+            font-weight: normal;
 
             color: #7a4052;
 
-            font-family: Georgia, serif;
-            font-weight: normal;
+            animation: textoEntrar 1.5s ease;
         }
 
-        p {
+        .subtitle {
+            margin-top: 15px;
+            margin-bottom: 30px;
+
+            font-size: 19px;
+
             color: #765f66;
+
+            animation: textoEntrar 1.8s ease;
+        }
+
+        /* Botão */
+
+        .enter-button {
+            border: none;
+
+            padding: 16px 28px;
+
+            border-radius: 50px;
+
+            background: #7a4052;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(122, 64, 82, 0.25);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+            animation: botaoEntrar 2s ease;
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 30px rgba(122, 64, 82, 0.30);
+        }
+
+        .enter-button:active {
+            transform: scale(0.96);
+        }
+
+        /* =========================
+           CORAÇÕES FLUTUANTES
+        ========================= */
+
+        .heart {
+            position: absolute;
+
+            font-size: 22px;
+
+            opacity: 0.45;
+
+            animation: flutuar 6s infinite ease-in-out;
+        }
+
+        .heart-1 {
+            top: 10%;
+            left: 10%;
+        }
+
+        .heart-2 {
+            top: 20%;
+            right: 12%;
+
+            animation-delay: 1s;
+        }
+
+        .heart-3 {
+            bottom: 18%;
+            left: 8%;
+
+            animation-delay: 2s;
+        }
+
+        .heart-4 {
+            bottom: 10%;
+            right: 10%;
+
+            animation-delay: 3s;
+        }
+
+        /* =========================
+           SEGUNDA PARTE
+        ========================= */
+
+        .home {
+            min-height: 100vh;
+
+            padding: 70px 25px;
+
+            display: none;
+
+            animation: aparecer 1s ease;
+        }
+
+        .home.active {
+            display: block;
+        }
+
+        .home-container {
+            width: 100%;
+            max-width: 500px;
+
+            margin: 0 auto;
+
+            text-align: center;
+        }
+
+        .home-title {
+            font-family: Georgia, serif;
+
+            font-size: 36px;
+
+            font-weight: normal;
+
+            color: #7a4052;
+
+            margin-bottom: 10px;
+        }
+
+        .home-description {
             font-size: 17px;
+
+            line-height: 1.6;
+
+            margin-bottom: 35px;
+        }
+
+        /* Cards */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .card {
+            min-height: 150px;
+
+            padding: 25px 15px;
+
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.75);
+
+            box-shadow:
+                0 10px 30px rgba(122, 64, 82, 0.08);
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px rgba(122, 64, 82, 0.13);
+        }
+
+        .card-icon {
+            font-size: 35px;
+
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-family: Georgia, serif;
+
+            font-size: 20px;
+
+            color: #7a4052;
+        }
+
+        .card-text {
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            color: #876e76;
+        }
+
+        /* =========================
+           ANIMAÇÕES
+        ========================= */
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fotoEntrar {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes textoEntrar {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes botaoEntrar {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flutuar {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(8deg);
+            }
+        }
+
+        /* =========================
+           CELULAR PEQUENO
+        ========================= */
+
+        @media (max-width: 380px) {
+
+            .opening {
+                padding: 18px;
+            }
+
+            .photo-container {
+                max-width: 300px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            .enter-button {
+                padding: 14px 22px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- =========================
+         TELA DE ABERTURA
+    ========================= -->
 
-        <img
-            src="fotos/foto_1.jpeg"
-            alt="Nós dois"
-        >
+    <section class="opening" id="opening">
 
-        <h1>Minha Princesa ❤️</h1>
+        <!-- Corações decorativos -->
 
-        <p>
-            Te amo muito! ❤️
-        </p>
+        <span class="heart heart-1">❤️</span>
+        <span class="heart heart-2">💕</span>
+        <span class="heart heart-3">❤️</span>
+        <span class="heart heart-4">💗</span>
 
-    </div>
+        <div class="opening-content">
+
+            <div class="photo-container">
+
+                <img
+                    src="fotos/foto_1.jpeg"
+                    alt="Nós dois"
+                >
+
+            </div>
+
+            <h1>
+                Minha Princesa ❤️
+            </h1>
+
+            <p class="subtitle">
+                Te amo muito! ❤️
+            </p>
+
+            <button
+                class="enter-button"
+                onclick="entrar()"
+            >
+                Entrar no nosso cantinho ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PÁGINA PRINCIPAL
+    ========================= -->
+
+    <section class="home" id="home">
+
+        <div class="home-container">
+
+            <h2 class="home-title">
+                Nosso Cantinho ❤️
+            </h2>
+
+            <p class="home-description">
+                Um pequeno lugar na internet que é só nosso.
+                <br>
+                Para guardar nossas histórias, memórias
+                e tudo aquilo que torna nós dois especiais.
+            </p>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        💕
+                    </div>
+
+                    <div class="card-title">
+                        Nossa História
+                    </div>
+
+                    <div class="card-text">
+                        Onde tudo começou...
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        📸
+                    </div>
+
+                    <div class="card-title">
+                        Memórias
+                    </div>
+
+                    <div class="card-text">
+                        Nossos momentos
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        💌
+                    </div>
+
+                    <div class="card-title">
+                        Uma Carta
+                    </div>
+
+                    <div class="card-text">
+                        Algo que quero te dizer
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        🎵
+                    </div>
+
+                    <div class="card-title">
+                        Nossa Música
+                    </div>
+
+                    <div class="card-text">
+                        Uma música que lembra nós
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ⏳
+                    </div>
+
+                    <div class="card-title">
+                        Nosso Tempo
+                    </div>
+
+                    <div class="card-text">
+                        Cada momento juntos
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ✨
+                    </div>
+
+                    <div class="card-title">
+                        Surpresa
+                    </div>
+
+                    <div class="card-text">
+                        Tem algo aqui...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        function entrar() {
+
+            const opening = document.getElementById("opening");
+            const home = document.getElementById("home");
+
+            opening.style.display = "none";
+
+            home.classList.add("active");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
 
 </body>
 </html>
